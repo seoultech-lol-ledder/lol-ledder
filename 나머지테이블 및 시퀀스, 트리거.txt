@@ -1,0 +1,101 @@
+create table tMatchlist
+(
+MatchNumber number(30) constraint pk_matchnumber primary key,
+matchid number(30) not null,
+totalgames number(5),
+summonerid number(30) constraint fk_summoner_id
+references tsummoner(summonerid) on delete cascade,
+participateid number(30) constraint fk_part_id
+references tparticipatestat(participateid) on delete cascade
+);
+
+create table tparticipatestat
+(
+participateid number(30) constraint pk_participateid primary key,
+championid number(6) constraint fk_champion_id
+references tChampion_data(champion_id) on delete cascade,
+kill number(10),
+death number(10),
+assist number(10)
+);
+
+create table tsummoner
+(
+summonerid number(30) constraint pk_summonerid primary key,
+accountid number(30) not null,
+summonername varchar2(50) not null unique,
+summonerlevel number(5) not null,
+profileiconid number(5) not null
+);
+
+create table ttierlist(
+tiernumber number(10) constraint pk_tiernumber primary key,
+tier varchar2(20),
+rank varchar2(20),
+wins number(5),
+losses number(5),
+leaguepoints number(5),
+leaguename varchar2(30),
+summonerid number(30) constraint fk_summoner
+references tsummoner(summonerid) on delete cascade
+);
+
+//자동증가 시퀀스
+create sequence tier_auto_increment start with 1 increment by 1;
+create sequence part_auto_increment start with 1 increment by 1;
+create sequence match_auto_increment start with 1 increment by 1;
+
+drop sequence tier_auto_increment;
+drop sequence part_auto_increment;
+drop sequence match_auto_increment;
+
+//트리거
+create or replace trigger tier_pk_auto
+before insert on ttierlist
+for each row
+begin
+    select tier_auto_increment.NEXTVAL into :new.tiernumber from dual;
+end;
+/
+
+create or replace trigger part_pk_auto
+before insert on tparticipatestat
+for each row
+begin
+    select part_auto_increment.NEXTVAL into :new.participateid from dual;
+end;
+/
+
+create or replace trigger match_pk_auto
+before insert on tmatchlist
+for each row
+begin
+    select match_auto_increment.NEXTVAL into :new.MatchNumber from dual;
+end;
+/
+
+//프로시저
+create or replace procedure out_count
+(vcountnum out tparticipatestat.participateid%type)
+is
+begin
+    select count(participateid) into vcountnum from tparticipatestat;
+end;
+/
+
+
+exec out_count(:num);
+print num;
+
+select * from tmatchList;
+select * from tparticipatestat;
+select * from tsummoner;
+select * from ttierlist;
+select * from tchampion_data;
+
+commit;
+
+drop table tmatchlist;
+drop table tparticipatestat;
+drop table tsummoner;
+drop table ttierlist;

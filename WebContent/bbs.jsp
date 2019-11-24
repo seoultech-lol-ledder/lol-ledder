@@ -21,27 +21,28 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-	<title>jsp 게시판 웹사이트</title>
+<title>jsp 게시판 웹사이트</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	
-	<!-- Custom fonts for this template -->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-	<link href="vendor/simple-line-icons/css/simple-line-icons.css"
-		rel="stylesheet" type="text/css">
-	<link
-		href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
-		rel="stylesheet" type="text/css">
-	
-	<!-- Custom styles for this template -->
-	<link href="css/landing-page.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link href="vendor/simple-line-icons/css/simple-line-icons.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+	rel="stylesheet" type="text/css">
+
+<!-- Custom styles for this template -->
+<link href="css/landing-page.min.css" rel="stylesheet">
 
 <style type="text/css">
 a {
@@ -68,8 +69,8 @@ a:hover {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">전적 검색</a></li>
+					<li class="nav-item active"><a class="nav-link"
+						href="index.jsp">전적 검색</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
 					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
@@ -126,28 +127,27 @@ a:hover {
 			<%
 				if (pageNumber != 1) {
 			%>
-			<a href="bbs.jsp?pageNumber=<%=pageNumber - 1%>"
-				class="btn btn-default btn-arrow-left">이전</a>
+			<a style="margin-right: 5px"
+				href="bbs.jsp?pageNumber=<%=pageNumber - 1%>"
+				class="btn btn-outline-primary">이전</a>
 			<%
 				}
 			%>
 			<%
 				if (bbsDAO.nextPage(pageNumber + 1)) {
 			%>
-			<a href="bbs.jsp?pageNumber=<%=pageNumber + 1%>"
-				class="btn btn-default btn-arrow-left">다음</a>
+			<a style="margin-right: 5px"
+				href="bbs.jsp?pageNumber=<%=pageNumber + 1%>"
+				class="btn btn-outline-primary">다음</a>
 			<%
 				}
 			%>
-			<a href="bbs_write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+			<a href="bbs_write.jsp" class="btn btn-primary">글쓰기</a>
 		</div>
-	</div>
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.slim.min.js"></script>
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
+		<!-- Bootstrap core JavaScript -->
+		<script src="vendor/jquery/jquery.slim.min.js"></script>
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

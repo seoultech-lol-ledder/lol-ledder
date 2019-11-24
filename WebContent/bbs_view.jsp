@@ -118,11 +118,11 @@
 					</tr>
 				</tbody>
 			</table>
-			<a href="bbs.jsp" class="btn btn-primary">목록</a>
+			<a style="margin-right: 5px" href="bbs.jsp" class="btn btn-primary">목록</a>
 			<%
 				if (userID != null && userID.equals(bbs.getUserID())) {
 			%>
-			<a href="bbs_update.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">수정</a>
+			<a style="margin-right: 5px" href="bbs_update.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">수정</a>
 			<a onClick="return confirm('정말로 삭제하시겠습니까?')"
 				href="bbs_deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">삭제</a>
 			<%

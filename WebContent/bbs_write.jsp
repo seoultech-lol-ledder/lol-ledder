@@ -10,9 +10,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 뷰포트 -->
 <meta name="viewport" content="width=device-width" initial-scale="1">
-<!-- 스타일시트 참조  -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+
 <title>jsp 게시판 웹사이트</title>
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link href="vendor/simple-line-icons/css/simple-line-icons.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+	rel="stylesheet" type="text/css">
+
+<!-- Custom styles for this template -->
+<link href="css/landing-page.min.css" rel="stylesheet">
 
 </head>
 
@@ -30,37 +43,35 @@
 			script.println("</script>");
 		}
 	%>
-	<!-- 네비게이션  -->
-	<nav class="navbar navbar-default">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">LOL Ledder</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">JSP 게시판</a>
-		</div>
-		<div class="collapse navbar-collapse"
-			id="#bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href="bbs_main.jsp">메인</a></li>
-				<li class="active"><a href="bbs.jsp">게시판</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">회원관리<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="bbs_logoutAction.jsp">로그아웃</a></li>
-					</ul></li>
-			</ul>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link"
+						href="index.jsp">전적 검색 </a></li>
+					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
+					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
+					</li>
+				</ul>
+			</div>
+
+			<a class="btn btn-primary" href="bbs_deleteAction.jsp">로그아웃</a>
+
 		</div>
 	</nav>
 	<div class="container">
 		<form method="post" action="bbs_writeAction.jsp">
 			<div style="text-align: center;">
-				<div style="text-align: left; padding-left: 10px; margin-bottom: 20px; font-weight: bold; font-size: large;">게시판
+				<div
+					style="text-align: left; padding-left: 10px; margin-bottom: 20px; font-weight: bold; font-size: large;">게시판
 					글쓰기</div>
 				<div style="margin: 10px">
 					<input type="text" class="form-control" placeholder="글 제목"

@@ -1,6 +1,6 @@
 <%@ page import="Resources.SummonerDatas"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 <%
 	request.setCharacterEncoding("utf-8");
@@ -21,7 +21,7 @@
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	}
-	//¼ÒÈ¯»çÁ¤º¸ µðºñ°Ë»ö
+	//ì†Œí™˜ì‚¬ì •ë³´ ë””ë¹„ê²€ìƒ‰
 	try {
 		dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 		String sql = "select * from tsummoner where summonername=?";
@@ -29,34 +29,34 @@
 		pstmt.setString(1, name);
 		rs = pstmt.executeQuery();
 		while (rs.next()) {
-			sd.setAccountId(rs.getString("accountid")); //°èÁ¤¾ÆÀÌµð
-			sd.setId(rs.getString("summonerid")); //¼ÒÈ¯»ç¾ÆÀÌµð
-			sd.setName(rs.getString("summonername")); //¼ÒÈ¯»ç¸í
-			sd.setSummonerLevel(rs.getLong("summonerlevel")); //¼ÒÈ¯»ç·¹º§
-			sd.setProfileIconId(rs.getInt("profileiconid")); //ÇÁ·ÎÇÊ
+			sd.setAccountId(rs.getString("accountid")); //ê³„ì •ì•„ì´ë””
+			sd.setId(rs.getString("summonerid")); //ì†Œí™˜ì‚¬ì•„ì´ë””
+			sd.setName(rs.getString("summonername")); //ì†Œí™˜ì‚¬ëª…
+			sd.setSummonerLevel(rs.getLong("summonerlevel")); //ì†Œí™˜ì‚¬ë ˆë²¨
+			sd.setProfileIconId(rs.getInt("profileiconid")); //í”„ë¡œí•„
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	//Æ¼¾îÁ¤º¸ µðºñ°Ë»ö
+	//í‹°ì–´ì •ë³´ ë””ë¹„ê²€ìƒ‰
 	try {
 		String sql = "select * from ttierlist where summonerid =?";
 		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setString(1, sd.getId()); //¼ÒÈ¯»ç¾ÆÀÌµð·Î Äõ¸®¹®¹Þ±â
+		pstmt.setString(1, sd.getId()); //ì†Œí™˜ì‚¬ì•„ì´ë””ë¡œ ì¿¼ë¦¬ë¬¸ë°›ê¸°
 		rs = pstmt.executeQuery();
 		while (rs.next()) {
-			sd.setRank(rs.getString("rank_pos")); //¼ÒÈ¯»ç ·©Å©
-			sd.setTier(rs.getString("tier")); //¼ÒÈ¯»ç Æ¼¾î
-			sd.setWin(rs.getInt("wins")); //¼ÒÈ¯»ç ½Â¸®
-			sd.setLosses(rs.getInt("losses")); //¼ÒÈ¯»ç ÆÐ¹è
-			sd.setLeagueName(rs.getString("leaguename")); //¸®±×¸í
-			sd.setLeaguePoints(rs.getInt("leaguepoints")); //¸®±×Æ÷ÀÎÆ®
+			sd.setRank(rs.getString("rank_pos")); //ì†Œí™˜ì‚¬ ëž­í¬
+			sd.setTier(rs.getString("tier")); //ì†Œí™˜ì‚¬ í‹°ì–´
+			sd.setWin(rs.getInt("wins")); //ì†Œí™˜ì‚¬ ìŠ¹ë¦¬
+			sd.setLosses(rs.getInt("losses")); //ì†Œí™˜ì‚¬ íŒ¨ë°°
+			sd.setLeagueName(rs.getString("leaguename")); //ë¦¬ê·¸ëª…
+			sd.setLeaguePoints(rs.getInt("leaguepoints")); //ë¦¬ê·¸í¬ì¸íŠ¸
 		}
 	} catch (Exception e) {
 		//e.printStackTrace();
-		System.out.println("Æ¼¾îÁ¤º¸ ºÒ·¯¿À±â ¿À·ù");
+		System.out.println("í‹°ì–´ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì˜¤ë¥˜");
 	}
-	//¸ÅÄ¡Á¤º¸µðºñ°Ë»ö
+	//ë§¤ì¹˜ì •ë³´ë””ë¹„ê²€ìƒ‰
 	try {
 		String sql = "select * from tmatchlist where summonerid =?";
 		pstmt = dbcon.prepareStatement(sql);
@@ -68,9 +68,9 @@
 		}
 	} catch (Exception e) {
 		//e.printStackTrace();
-		System.out.println("¸ÅÄªÁ¤º¸ ºÒ·¯¿À±â ¿À·ù");
+		System.out.println("ë§¤ì¹­ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì˜¤ë¥˜");
 	}
-	//Ã¨ÇÇ¾ðÁ¤º¸
+	//ì±”í”¼ì–¸ì •ë³´
 	try {
 		String sql = "select * from tChampion_data where CHAMPION_ID =?";
 		pstmt = dbcon.prepareStatement(sql);
@@ -82,7 +82,7 @@
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
-		System.out.println("Ã¨ÇÇ¾ð¾ÆÀÌµð ºÒ·¯¿À±â ¿À·ù");
+		System.out.println("ì±”í”¼ì–¸ì•„ì´ë”” ë¶ˆëŸ¬ì˜¤ê¸° ì˜¤ë¥˜");
 	}
 	pstmt.close();
 	rs.close();
@@ -98,7 +98,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>ÀüÀû °Ë»ö Å×ÀÌºí</title>
+  <title>ì „ì  ê²€ìƒ‰ í…Œì´ë¸”</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -116,19 +116,19 @@
 <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
-            <%=sd.getName() %>´ÔÀÇ ÀüÀû</div>
+            <%=sd.getName() %>ë‹˜ì˜ ì „ì </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>¼ÒÈ¯»ç¸í</th>
-                    <th>·¹º§</th>
-                    <th>Æ¼¾î</th>
-                    <th>¸®±×Æ÷ÀÎÆ®</th>
-                    <th>·©Å© °ÔÀÓ ½Â¸®</th>
-                    <th>·©Å© °ÔÀÓ ÆÐ¹è</th>
-                    <th>ÇÃ·¹ÀÌÇÑ °ÔÀÓ ¼ö</th>
+                    <th>ì†Œí™˜ì‚¬ëª…</th>
+                    <th>ë ˆë²¨</th>
+                    <th>í‹°ì–´</th>
+                    <th>ë¦¬ê·¸í¬ì¸íŠ¸</th>
+                    <th>ëž­í¬ ê²Œìž„ ìŠ¹ë¦¬</th>
+                    <th>ëž­í¬ ê²Œìž„ íŒ¨ë°°</th>
+                    <th>í”Œë ˆì´í•œ ê²Œìž„ ìˆ˜</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -137,9 +137,9 @@
 					<td><%=sd.getSummonerLevel() %></td>
 					<td><%=sd.getTier()+" "+sd.getRank() %></td>
 					<td><%=sd.getLeaguePoints()+"LP" %></td>
-					<td><%=sd.getWin()+"½Â" %></td>
-					<td><%=sd.getLosses()+"ÆÐ" %></td>
-					<td><%="ÃÑ "+sd.getTotalGame()+"È¸" %></td>
+					<td><%=sd.getWin()+"ìŠ¹" %></td>
+					<td><%=sd.getLosses()+"íŒ¨" %></td>
+					<td><%="ì´ "+sd.getTotalGame()+"íšŒ" %></td>
                   </tr>
                 </tbody>
               </table>

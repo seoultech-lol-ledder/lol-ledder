@@ -1,33 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter"%>
-<%@ page import="bbs.BbsDAO"%>
-<%@ page import="bbs.Bbs"%>
-<%@ page import="java.util.ArrayList"%>
-
-<%
-	String userID = null;
-	if (session.getAttribute("userID") != null) {
-		userID = (String) session.getAttribute("userID");
-	}
-	int pageNumber = 1;
-	if (request.getParameter("pageNumber") != null) {
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-	}
-%>
-
+	<%
+		String userID = null;
+		if (session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+	%>
+	
 <!DOCTYPE html>
 <html>
-
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
 
-	<title>jsp 게시판 웹사이트</title>
+	<title>LOL Ledder</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,19 +32,10 @@
 	<!-- Custom styles for this template -->
 	<link href="css/landing-page.min.css" rel="stylesheet">
 
-<style type="text/css">
-a {
-	color: #000000
-}
-
-a:hover {
-	color: #0000ff
-}
-</style>
-
 </head>
 
 <body>
+
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -69,7 +49,8 @@ a:hover {
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">전적 검색</a></li>
+						<a class="nav-link" href="index.jsp">전적 검색</a>
+					</li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
 					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
@@ -85,7 +66,8 @@ a:hover {
 			<%
 				} else {
 			%>
-			<a class="btn btn-primary" href="bbs_logoutAction.jsp">로그아웃</a>
+			<a class="btn btn-primary"
+				href="bbs_logoutAction.jsp">로그아웃</a>
 			<%
 				}
 			%>
@@ -93,61 +75,38 @@ a:hover {
 		</div>
 	</nav>
 
-	<div class="container">
-		<div class="row">
-			<table class="table table-hover" style="text-align: center">
-				<thead>
-					<tr>
-						<th style="text-align: center">번호</th>
-						<th style="text-align: center">제목</th>
-						<th style="text-align: center">작성자</th>
-						<th style="text-align: center">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						BbsDAO bbsDAO = new BbsDAO();
-						ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
-						for (int i = 0; i < list.size(); i++) {
-					%>
-					<tr>
-						<td><%=list.get(i).getBbsID()%></td>
-						<td><a href="bbs_view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
-						.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
-						<td><%=list.get(i).getUserID()%></td>
-						<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 "
-						+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
-					</tr>
-					<%
-						}
-					%>
-				</tbody>
-			</table>
-			<%
-				if (pageNumber != 1) {
-			%>
-			<a href="bbs.jsp?pageNumber=<%=pageNumber - 1%>"
-				class="btn btn-default btn-arrow-left">이전</a>
-			<%
-				}
-			%>
-			<%
-				if (bbsDAO.nextPage(pageNumber + 1)) {
-			%>
-			<a href="bbs.jsp?pageNumber=<%=pageNumber + 1%>"
-				class="btn btn-default btn-arrow-left">다음</a>
-			<%
-				}
-			%>
-			<a href="bbs_write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+	<!-- Masthead -->
+	<header class="masthead text-white text-center">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-9 mx-auto">
+					<h1 class="mb-5">전적 검색</h1>
+				</div>
+				<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+					<form method="post" action="SearchSummoner.jsp">
+						<div class="form-row">
+							<div class="col-12 col-md-9 mb-2 mb-md-0">
+								<input type="text" name="name"
+									class="form-control form-control-lg"
+									placeholder="소환사 명을 입력하세요.">
+							</div>
+							<div class="col-12 col-md-3">
+								<button type="submit" class="btn btn-block btn-lg btn-primary">소환사
+									검색</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
-	</div>
+	</header>
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.slim.min.js"></script>
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
 </body>
+
 </html>

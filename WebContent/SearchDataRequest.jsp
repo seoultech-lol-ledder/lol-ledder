@@ -29,7 +29,7 @@
 %>
 <%
 	//api key 설정
-	ApiConfig cfg = new ApiConfig().setKey("RGAPI-329cf0ef-286c-4e81-b472-176dcdb0b23f");
+	ApiConfig cfg = new ApiConfig().setKey("RGAPI-c40b231b-fad2-4d04-b618-dcb19da5c149");
 	//api패스 설정
 	RiotApi api = new RiotApi(cfg);
 	//소환사 이름으로 소환사id값을 찾기위함

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 
 <%
@@ -49,7 +49,7 @@
   <meta name="author" content="">
 
   <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-  <title><%=name %>ÀÇ ÀüÀûÁ¤º¸</title>
+  <title><%=name %>ì˜ ì „ì ì •ë³´</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -75,18 +75,18 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">ÀüÀû °Ë»ö
+            <a class="nav-link" href="#">ì „ì  ê²€ìƒ‰
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">³» ÀüÀû</a>
+            <a class="nav-link" href="#">ë‚´ ì „ì </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">·©Å·</a>
+            <a class="nav-link" href="#">ëž­í‚¹</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Ä¿¹Â´ÏÆ¼</a>
+            <a class="nav-link" href="#">ì»¤ë®¤ë‹ˆí‹°</a>
           </li>
         </ul>
       </div>
@@ -101,16 +101,16 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">ÀüÀû °Ë»ö</h1>
+          <h1 class="mb-5">ì „ì  ê²€ìƒ‰</h1>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form method="post" action="SearchSummoner.jsp">
             <div class="form-row">
               <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="text" class="form-control form-control-lg" placeholder="¼ÒÈ¯»ç ¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä.">
+                <input type="text" class="form-control form-control-lg" placeholder="ì†Œí™˜ì‚¬ ëª…ì„ ìž…ë ¥í•˜ì„¸ìš”.">
               </div>
               <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">¼ÒÈ¯»ç °Ë»ö</button>
+                <button type="submit" class="btn btn-block btn-lg btn-primary">ì†Œí™˜ì‚¬ ê²€ìƒ‰</button>
               </div>
             </div>
           </form>

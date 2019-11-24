@@ -58,12 +58,7 @@
 	String tier = tempList.get(0).getTier();//현재티어
 	int win = tempList.get(0).getWins();//승리횟수
 	int losses = tempList.get(0).getLosses();//패배횟수
-	
-	//소환사 매치정보
-	int championId = checkStats.getParticipants().get(0).getChampionId();//챔피언아이디
-	int kill = checkStats.getParticipants().get(0).getStats().getKills();//킬횟수
-	int death = checkStats.getParticipants().get(0).getStats().getDeaths();//죽은횟수
-	int assist = checkStats.getParticipants().get(0).getStats().getAssists();//어시스트
+
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -94,22 +89,7 @@
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		//참가자정보 디비삽입
-		try {
-			dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-			String sql = "insert into tparticipatestat(championid, kill_count, death, assist) values(?,?,?,?)";
-			//String sql ="select * from tChampion_data";	
-			pstmt = dbcon.prepareStatement(sql);
-			//pstmt.setInt(1, checkStats.getParticipants().get(0).getParticipantId());
-			pstmt.setInt(1, championId);
-			pstmt.setInt(2, kill);
-			pstmt.setInt(3, death);
-			pstmt.setInt(4, assist);
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("참가자정보 에러");
-		}
+
 		//소환사정보 디비삽입
 		try {
 			String sql = "insert into tSummoner(summonerid,accountid, summonername,summonerlevel,profileiconid) values(?,?,?,?,?)";

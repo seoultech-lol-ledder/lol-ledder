@@ -70,22 +70,6 @@
 		//e.printStackTrace();
 		System.out.println("매칭정보 불러오기 오류");
 	}
-	//참가자정보 디비검색
-	try {
-		String sql = "select * from tparticipatestat where participateid =?";
-		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setInt(1, sd.getParticipateId());
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			sd.setChampionId(rs.getInt("championid"));
-			sd.setKill(rs.getInt("kill_count"));
-			sd.setDeath(rs.getInt("death"));
-			sd.setAssist(rs.getInt("assist"));
-		}
-	} catch (Exception e) {
-		//e.printStackTrace();
-		System.out.println("참가자정보 불러오기 오류");
-	}
 	//챔피언정보
 	try {
 		String sql = "select * from tChampion_data where CHAMPION_ID =?";
@@ -109,7 +93,6 @@
 
 <head>
 
-	<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -136,11 +119,6 @@
             <%=sd.getName() %>님의 전적</div>
           <div class="card-body">
             <div class="table-responsive">
-	            <%
-					avg = sd.getKill() + sd.getAssist();
-					avg = avg / sd.getDeath();
-					avg = Double.parseDouble(String.format("%.2f", avg));
-				%>
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
@@ -151,8 +129,6 @@
                     <th>랭크 게임 승리</th>
                     <th>랭크 게임 패배</th>
                     <th>플레이한 게임 수</th>
-                    <th>최근 플레이한 챔피언</th>
-                    <th>KDA</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -164,8 +140,6 @@
 					<td><%=sd.getWin()+"승" %></td>
 					<td><%=sd.getLosses()+"패" %></td>
 					<td><%="총 "+sd.getTotalGame()+"회" %></td>
-					<td><img src="Champions/<%=sd.getImage()%>.png"></br><%=sd.getChampionName() %></td>
-					<td><%=sd.getKill()+"킬\n"+sd.getDeath()+"데스\n"+sd.getAssist() +"어시\n"+"</br>평점 :"+avg%></td>
                   </tr>
                 </tbody>
               </table>
@@ -174,8 +148,6 @@
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
 
-      </div>
-      
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

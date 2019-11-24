@@ -123,11 +123,13 @@
   <%	
 		if(rs.next()){
 			System.out.println("found!");
-			%><jsp:include page="SearchDBData.jsp" flush="false"/> <%
+			%><jsp:include page="SearchDBData.jsp" flush="false"/> 
+			<jsp:include page="SearchMatchList.jsp" flush="flase"/><%
 		}else{
 			System.out.println("not found");
 			%><jsp:include page="SearchDataRequest.jsp" flush="false"/>
-			<jsp:include page="SearchDBData.jsp" flush="flase"/><%
+			<jsp:include page="SearchDBData.jsp" flush="flase"/>
+			<jsp:include page="SearchMatchList.jsp" flush="flase"/><%
 		}
 	
 	

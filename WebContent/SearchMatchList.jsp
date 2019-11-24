@@ -47,23 +47,40 @@
 	//매치리스트와 관련된 레퍼런스들
 	List<MatchReference> matchListRef = matchList.getMatches();
 	
+	long[] goldEarned = new long[20];
+	String[] isWin = new String[20];
 	int[] championId = new int[20];
 	int[] kill = new int[20];
 	int[] death = new int[20];
 	int[] assist = new int[20];
+	int[] championLevel = new int[20];
+	int[] minionKill = new int[20];
+	long[] visionScore = new long[20];
 	String[] championName = new String[20];
 	String[] image = new String[20];
-	for(int i = 0 ; i < 2 ; i++){
+	
+	for(int i = 0 ; i < 10 ; i++){
 		//매치 스텟관련 정보들
 		Match checkStats = api.getMatch(Platform.KR, matchListRef.get(i).getGameId());
 
 	
 		//소환사 매치정보
-		championId[i] = checkStats.getParticipants().get(i).getChampionId();//챔피언아이디
-		kill[i] = checkStats.getParticipants().get(i).getStats().getKills();//킬횟수
-		death[i] = checkStats.getParticipants().get(i).getStats().getDeaths();//죽은횟수
-		assist[i] = checkStats.getParticipants().get(i).getStats().getAssists();//어시스트
-
+		goldEarned[i] = checkStats.getParticipantBySummonerName(name).getStats().getGoldEarned();
+		if(checkStats.getParticipantBySummonerName(name).getStats().isWin()== true){
+			isWin[i] = "승리";
+		}else{
+			isWin[i] = "패배";
+		}
+		
+		championId[i] = checkStats.getParticipantBySummonerName(name).getChampionId();//챔피언아이디
+		kill[i] = checkStats.getParticipantBySummonerName(name).getStats().getKills();//킬횟수
+		death[i] = checkStats.getParticipantBySummonerName(name).getStats().getDeaths();//죽은횟수
+		assist[i] = checkStats.getParticipantBySummonerName(name).getStats().getAssists();//어시스트
+		championLevel[i] = checkStats.getParticipantBySummonerName(name).getStats().getChampLevel();
+		minionKill[i] = checkStats.getParticipantBySummonerName(name).getStats().getTotalMinionsKilled()
+				+ checkStats.getParticipantBySummonerName(name).getStats().getNeutralMinionsKilled();
+		visionScore[i] = checkStats.getParticipantBySummonerName(name).getStats().getVisionScore();
+			
 	}
 	
 	//search 에서 온 부분
@@ -71,19 +88,22 @@
 	Connection dbcon = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	SummonerDatas sd = new SummonerDatas();
-	double avg = 0;
+	
+	double[] avg = new double[10];
+	
 	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?serverTimezone=UTC";
 	String DB_USER = "root";
 	String DB_PASSWORD = "root";
 	try {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 	} catch (ClassNotFoundException e) {
+		System.out.println("DB 연결 실패");
 		e.printStackTrace();
 	}
 	//챔피언정보
-	for(int i = 0 ; i < 2 ; i++){
+	for(int i = 0 ; i < 10 ; i++){
 		try {
+			dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 			String sql = "select * from tChampion_data where CHAMPION_ID =?";
 			pstmt = dbcon.prepareStatement(sql);
 			pstmt.setInt(1, championId[i]);
@@ -94,6 +114,7 @@
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(championId[i]);
 			System.out.println("챔피언아이디 불러오기 오류");
 		}
 	}
@@ -107,7 +128,6 @@
 
 <head>
 
-	<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -131,48 +151,46 @@
 <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
-            <%=sd.getName() %>님의 전적</div>
+            <%= name %>님의 최근 전적</div>
           <div class="card-body">
             <div class="table-responsive">
 	            <%
-					avg = sd.getKill() + sd.getAssist();
-					avg = avg / sd.getDeath();
-					avg = Double.parseDouble(String.format("%.2f", avg));
+	            for(int i = 0 ; i < 10 ; i++){
+					avg[i] = kill[i] + assist[i];
+					avg[i] = avg[i] /death[i];
+					avg[i] = Double.parseDouble(String.format("%.2f", avg[i]));
+	            }
 				%>
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                 <thead>
                   <tr>
-                    <th>소환사명</th>
+                    <th>플레이한 챔피언</th>
+                    <th>결과</th>
                     <th>레벨</th>
-                    <th>티어</th>
-                    <th>리그포인트</th>
-                    <th>랭크 게임 승리</th>
-                    <th>랭크 게임 패배</th>
-                    <th>플레이한 게임 수</th>
-                    <th>최근 플레이한 챔피언</th>
+                    <th>CS</th>
+                    <th>시야점수</th>
                     <th>KDA</th>
+                    <th>골드</th>
                   </tr>
                 </thead>
                 <tbody>
+                <%for(int i = 0 ; i < 10 ; i++){ %>
                   <tr>
-					<td><%=sd.getName() %></td>
-					<td><%=sd.getSummonerLevel() %></td>
-					<td><%=sd.getTier()+" "+sd.getRank() %></td>
-					<td><%=sd.getLeaguePoints()+"LP" %></td>
-					<td><%=sd.getWin()+"승" %></td>
-					<td><%=sd.getLosses()+"패" %></td>
-					<td><%="총 "+sd.getTotalGame()+"회" %></td>
-					<td><img src="Champions/<%=sd.getImage()%>.png"></br><%=sd.getChampionName() %></td>
-					<td><%=sd.getKill()+"킬\n"+sd.getDeath()+"데스\n"+sd.getAssist() +"어시\n"+"</br>평점 :"+avg%></td>
+                    <td style="vertical-align:middle"><img src="Champions/<%=image[i]%>.png"><br><%=championName[i] %></td>
+                  	<td style="vertical-align:middle"><%=isWin[i] %>
+                  	<td style="vertical-align:middle"><%=championLevel[i] %>
+                  	<td style="vertical-align:middle"><%=minionKill[i] %>
+                  	<td style="vertical-align:middle"><%=visionScore[i] %>
+					<td style="vertical-align:middle"><%=kill[i]+"킬<br>"+death[i]+"데스<br>"+assist[i] +"어시<br>"+"평점 :"+avg[i]%></td>
+					<td style="vertical-align:middle"><%=goldEarned[i] %>
                   </tr>
+                  <%} %>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-
-      </div>
       
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>

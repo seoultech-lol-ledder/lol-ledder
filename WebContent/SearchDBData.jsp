@@ -13,11 +13,11 @@
 	ResultSet rs = null;
 	SummonerDatas sd = new SummonerDatas();
 	double avg = 0;
-	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?serverTimezone=UTC";
+	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
 	String DB_USER = "root";
 	String DB_PASSWORD = "root";
 	try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		Class.forName("com.mysql.jdbc.Driver");
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	}

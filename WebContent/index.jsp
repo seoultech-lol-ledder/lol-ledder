@@ -62,7 +62,7 @@
 			%>
 			<a style="margin-right: 5px" class="btn btn-primary"
 				href="bbs_login.jsp">로그인</a> <a class="btn btn-primary"
-				href="bbs_join.jsp">회원가입</a>
+				href="bbs_join.jsp">회원가입</a>
 			<%
 				} else {
 			%>

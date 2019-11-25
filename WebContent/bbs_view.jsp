@@ -64,12 +64,12 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="index.html">전적 검색
+					<li class="nav-item"><a class="nav-link"
+						href="index.html">전적 검색
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
-					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
+					<li class="nav-item active"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
 					</li>
 				</ul>
 			</div>
@@ -78,7 +78,7 @@
 			%>
 			<a style="margin-right: 5px" class="btn btn-primary"
 				href="bbs_login.jsp">로그인</a> <a class="btn btn-primary"
-				href="bbs_join.jsp">회원가입</a>
+				href="bbs_join.jsp">회원가입</a>
 			<%
 				} else {
 			%>

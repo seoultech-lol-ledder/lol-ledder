@@ -7,134 +7,21 @@ create table tChampion_data(
 	primary key(CHAMPION_ID)
 );
 
-create table tMatchlist
-(
-
-	MatchNumber int(11) not null,
-
-	matchid bigint(20),
-
-	totalgames int(5),
-
-	summonerid varchar(100),
-
-	participateid int(30),
-	primary key(MatchNumber)
-);
-
-create table tparticipatestat
-(
-
-	participateid int(30) not null, 
-	championid int(6),
-
-	kill_count int(10),
-
-	death int(10),
-
-	assist int(10),
-	primary key(participateid)
-);
-
-
-
 create table tsummoner
 (
 
 	summonerid varchar(100) not null,
-
 	accountid varchar(100),
-
 	summonername varchar(100),
-
 	summonerlevel int(30),
-
-	profileiconid int(30),
-	primary key(participateid)
-);
-
-
-
-create table ttierlist(
-
-	tiernumber int(11) not null,
-
+	profileIconId int(30),
 	tier varchar(20),
-
 	rank_pos varchar(20),
-
 	wins int(5),
-
 	losses int(5),
-
 	leaguepoints int(5),
-
 	leaguename varchar(100),
-
-	summonerid varchar(100),
-	primary key(tiernumber)
-
+	totalgames int(5),
+	primary key(summonerid)
 );
 
-
-
-//자동증가 시퀀스
-
-create sequence tier_auto_increment start with 1 increment by 1;
-create sequence part_auto_increment start with 1 increment by 1;
-create sequence match_auto_increment start with 1 increment by 1;
-
-drop sequence tier_auto_increment;
-drop sequence part_auto_increment;
-drop sequence match_auto_increment;
-
-//트리거
-create or replace trigger tier_pk_auto
-before insert on ttierlist
-for each row
-begin
-    select tier_auto_increment.NEXTVAL into :new.tiernumber from dual;
-end;
-/
-
-create or replace trigger part_pk_auto
-before insert on tparticipatestat
-for each row
-begin
-    select part_auto_increment.NEXTVAL into :new.participateid from dual;
-end;
-/
-
-create or replace trigger match_pk_auto
-before insert on tmatchlist
-for each row
-begin
-    select match_auto_increment.NEXTVAL into :new.MatchNumber from dual;
-end;
-/
-
-//프로시저
-create or replace procedure out_count
-(vcountnum out tparticipatestat.participateid%type)
-is
-begin
-    select count(participateid) into vcountnum from tparticipatestat;
-end;
-/
-
-
-exec out_count(:num);
-print num;
-
-select * from tmatchList;
-select * from tparticipatestat;
-select * from tsummoner;
-select * from ttierlist;
-select * from tchampion_data;
-
-commit;
-
-drop table tmatchlist;
-drop table tparticipatestat;
-drop table tsummoner;
-drop table ttierlist;

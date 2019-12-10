@@ -1,7 +1,10 @@
-create table tChampion_data
-(CHAMPION_ID number(6) constraint champion_pk primary key,
-CHAMPION_NAME varchar(30) constraint champion_name not null,
-IMAGE varchar(40) constraint champion_image not null);
+create table tChampion_data(
+	CHAMPION_ID int(6) ,
+	CHAMPION_NAME varchar(30) not null,
+	IMAGE varchar(40) not null,
+	primary key(CHAMPION_ID)
+);
+
 
 insert into tchampion_data values (1,'애니','AnnieSquare');
 insert into tchampion_data values (2,'올라프','OlafSquare');

@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	
 <%@ page import="Resources.SummonerDatas"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="Resources.LOLApiKey"%>
+
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Iterator"%>
@@ -29,9 +31,10 @@
 %>
 
 <%
-	//request에서 온 부분
+	
+	LOLApiKey key = new LOLApiKey();
 	//api key 설정
-	ApiConfig cfg = new ApiConfig().setKey("RGAPI-034d0435-2f31-4407-b3d0-ce3963bd9ec6");
+	ApiConfig cfg = key.getConfig();
 	//api패스 설정
 	RiotApi api = new RiotApi(cfg);
 	//소환사 이름으로 소환사id값을 찾기위함

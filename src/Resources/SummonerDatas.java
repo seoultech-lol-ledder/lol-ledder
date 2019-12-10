@@ -24,6 +24,8 @@ public class SummonerDatas{
 	private int totalGame; //총게임수
 	private int participateId; //참가자아이디
 	
+	private int rankPoint;
+	
 	public int getTotalGame() {
 		return totalGame;
 	}
@@ -138,5 +140,59 @@ public class SummonerDatas{
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
+	public int getRankPoint() {
+		return rankPoint;
+	}
+	public void setRankPoint(String rank, String tier, int leaguePoints ) {
+		int point = 0;
+		switch(tier) {
+		case "CHALLENGER":
+			point += 8000;
+			break;
+		case "GRAND_MASTER":
+			point += 7000;
+			break;
+		case "MASTER":
+			point += 6000;
+			break;
+		case "DIAMOND":
+			point += 5000;
+			break;
+		case "PLATUNUM":
+			point += 4000;
+			break;
+		case "GOLD":
+			point += 3000;
+		case "SHILBER":
+			point += 2000;
+			break;
+		case "BRONZE":
+			point += 1000;
+			break;
+		case "IRON":
+			point += 0;
+			break;
+		}
+		
+		switch(rank) {
+		case "I":
+			point += 800;
+			break;
+		case "II":
+			point += 600;
+			break;
+		case "III":
+			point += 400;
+			break;
+		case "IV":
+			point += 200;
+			break;
+		case "V":
+			point += 0;
+			break;
+		}
+		
+		point += leaguePoints;
+		this.rankPoint = point;
+	}
  }

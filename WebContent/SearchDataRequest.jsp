@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ page import="Resources.LOLApiKey"%>
+	
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Iterator"%>
@@ -17,8 +20,7 @@
 <%@ page import="net.rithms.riot.api.endpoints.match.dto.MatchList"%>
 <%@ page import="net.rithms.riot.api.endpoints.match.dto.MatchReference"%>
 <%@ page import="net.rithms.riot.api.endpoints.match.dto.Participant"%>
-<%@ page
-	import="net.rithms.riot.api.endpoints.match.dto.ParticipantStats"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.dto.ParticipantStats"%>
 <%@ page import="net.rithms.riot.api.endpoints.league.*"%>
 <%@ page import="net.rithms.riot.api.endpoints.league.methods.*"%>
 <%@ page import="net.rithms.riot.api.endpoints.league.constant.*"%>
@@ -27,39 +29,93 @@
 <%
 	request.setCharacterEncoding("utf-8");
 %>
+
 <%
-	//api key 설정
-	ApiConfig cfg = new ApiConfig().setKey("RGAPI-c40b231b-fad2-4d04-b618-dcb19da5c149");
-	//api패스 설정
-	RiotApi api = new RiotApi(cfg);
-	//소환사 이름으로 소환사id값을 찾기위함
-	Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("name"));
-	//소환사 정보
-	String name = summoner.getName(); //소환사이름
-	String acountId = summoner.getAccountId(); //계정 아이디
-	String id = summoner.getId(); // 소환사 아이디
-	int summonerLevel = summoner.getSummonerLevel(); //소환사 레벨
-	int profileIconId = summoner.getProfileIconId(); //프로필아이콘아이디
-	//최근 20경기에 대한 매치리스트
-	MatchList matchList = api.getMatchListByAccountId(Platform.KR, acountId);
-	//리그엔트리에 관련된 정보
-	Set<LeagueEntry> leagueEntry = api.getLeagueEntriesBySummonerId(Platform.KR, id);
-	//리그포지션의 경우 해쉬셋이므로 get()메소드를 사용할 수 없기때문에 어레이리스트로 바꿔서 저장하여 가져오기
-	//이때 해쉬셋에 들어있는 정보는 객체.size()로 확인하기...int index = 객체.size();
-	List<LeagueEntry> tempList = new ArrayList<LeagueEntry>(leagueEntry);
-	//매치리스트와 관련된 레퍼런스들
-	List<MatchReference> matchListRef = matchList.getMatches();
-	//매치 스텟관련 정보들
-	Match checkStats = api.getMatch(Platform.KR, matchListRef.get(0).getGameId());
-	//소환사 티어정보
-	String leagueName = tempList.get(0).getLeagueId();//리그이름
-	int leaguePoints = tempList.get(0).getLeaguePoints();//리그포인트
-	String rank = tempList.get(0).getRank();//현재랭크
-	String tier = tempList.get(0).getTier();//현재티어
-	int win = tempList.get(0).getWins();//승리횟수
-	int losses = tempList.get(0).getLosses();//패배횟수
+		LOLApiKey key = new LOLApiKey();
+		//api key 설정
+		ApiConfig cfg = key.getConfig();
+		//api패스 설정
+		RiotApi api = new RiotApi(cfg);
+		//소환사 이름으로 소환사id값을 찾기위함
+		Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("name"));
+		//소환사 정보
+		String name = summoner.getName(); //소환사이름
+		String acountId = summoner.getAccountId(); //계정 아이디
+		String id = summoner.getId(); // 소환사 아이디
+		int summonerLevel = summoner.getSummonerLevel(); //소환사 레벨
+		int profileIconId = summoner.getProfileIconId(); //프로필아이콘아이디
+		//최근 20경기에 대한 매치리스트
+		MatchList matchList = api.getMatchListByAccountId(Platform.KR, acountId);
+		//리그엔트리에 관련된 정보
+		Set<LeagueEntry> leagueEntry = api.getLeagueEntriesBySummonerId(Platform.KR, id);
+		//리그포지션의 경우 해쉬셋이므로 get()메소드를 사용할 수 없기때문에 어레이리스트로 바꿔서 저장하여 가져오기
+		//이때 해쉬셋에 들어있는 정보는 객체.size()로 확인하기...int index = 객체.size();
+		List<LeagueEntry> tempList = new ArrayList<LeagueEntry>(leagueEntry);
+		//매치리스트와 관련된 레퍼런스들
+		List<MatchReference> matchListRef = matchList.getMatches();
+		//매치 스텟관련 정보들
+		Match checkStats = api.getMatch(Platform.KR, matchListRef.get(0).getGameId());
+		//소환사 티어정보
+		String leagueName = tempList.get(0).getLeagueId();//리그이름
+		int leaguePoints = tempList.get(0).getLeaguePoints();//리그포인트
+		String rank = tempList.get(0).getRank();//현재랭크
+		String tier = tempList.get(0).getTier();//현재티어
+		int win = tempList.get(0).getWins();//승리횟수
+		int losses = tempList.get(0).getLosses();//패배횟수
+		int totalGames = matchList.getTotalGames();//총 플레이 횟수
+
+		int rankPoint = 0;
+		switch(tier) {
+		case "CHALLENGER":
+			rankPoint += 8000;
+			break;
+		case "GRAND_MASTER":
+			rankPoint += 7000;
+			break;
+		case "MASTER":
+			rankPoint += 6000;
+			break;
+		case "DIAMOND":
+			rankPoint += 5000;
+			break;
+		case "PLATUNUM":
+			rankPoint += 4000;
+			break;
+		case "GOLD":
+			rankPoint += 3000;
+		case "SHILBER":
+			rankPoint += 2000;
+			break;
+		case "BRONZE":
+			rankPoint += 1000;
+			break;
+		case "IRON":
+			rankPoint += 0;
+			break;
+		}
+		
+		switch(rank) {
+		case "I":
+			rankPoint += 800;
+			break;
+		case "II":
+			rankPoint += 600;
+			break;
+		case "III":
+			rankPoint += 400;
+			break;
+		case "IV":
+			rankPoint += 200;
+			break;
+		case "V":
+			rankPoint += 0;
+			break;
+		}
+		
+		rankPoint += leaguePoints;
 
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -77,7 +133,6 @@
 	<%
 		Connection dbcon = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		boolean found;
 		int temp=0;
 		
@@ -92,59 +147,28 @@
 
 		//소환사정보 디비삽입
 		try {
-			String sql = "insert into tSummoner(summonerid,accountid, summonername,summonerlevel,profileiconid) values(?,?,?,?,?)";
+			dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+			String sql = "insert into tSummoner(summonerid,accountid, summonername,summonerlevel,profileiconid, Tier, Rank_pos, Wins,Losses,LeaguePoints,LeagueName,totalgames, rankpoint) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = dbcon.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, acountId);
 			pstmt.setString(3, name); //이름 보여주기
 			pstmt.setInt(4, summonerLevel); //레벨 보여주기
 			pstmt.setInt(5, profileIconId);
+			pstmt.setString(6, tier); //티어보여기
+			pstmt.setString(7, rank);
+			pstmt.setInt(8, win);
+			pstmt.setInt(9, losses);
+			pstmt.setInt(10, leaguePoints);
+			pstmt.setString(11, leagueName);
+			pstmt.setInt(12, totalGames);
+			pstmt.setInt(13, rankPoint);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			//e.printStackTrace();
 			System.out.println("소환사정보 에러");
 		}
-		//티어정보 디비삽입
-		try {
-			String sql = "insert into tTierList(Tier, Rank_pos, Wins,Losses,LeaguePoints,LeagueName,SummonerID) values(?,?,?,?,?,?,?)";
-			pstmt = dbcon.prepareStatement(sql);
-			pstmt.setString(1, tier); //티어보여죽
-			pstmt.setString(2, rank);
-			pstmt.setInt(3, win);
-			pstmt.setInt(4, losses);
-			pstmt.setInt(5, leaguePoints);
-			pstmt.setString(6, leagueName);
-			pstmt.setString(7, id);
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("티어정보 에러");
-		}
-		//참가자인덱스 받아오기
-		try{
-			String sql = "select count(participateid) from tparticipatestat";
-			pstmt = dbcon.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while(rs.next()){
-				temp = rs.getInt("count(participateid)");
-			}
-		}catch(Exception e){}
-		
-		//매치리스트 디비삽입
-		try {
-			String sql = "insert into tMatchlist(matchid,totalgames,ParticipateID,SummonerID) values(?,?,?,?)";
-			pstmt = dbcon.prepareStatement(sql);
-			pstmt.setLong(1, matchListRef.get(0).getGameId());
-			pstmt.setInt(2, matchList.getTotalGames());
-			pstmt.setInt(3, temp);
-			pstmt.setString(4, id);
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("매치리스트 에러");
-		}
 		pstmt.close();
-		rs.close();
 		dbcon.close();
 	%>
 

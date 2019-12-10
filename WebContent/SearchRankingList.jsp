@@ -1,20 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	
 <%@ page import="Resources.SummonerDatas"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+
 <%@ page import="java.sql.*"%>
-<%@ page import="user.UserDAO"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Set"%>
 
-
+<%@ page import="net.rithms.riot.*"%>
+<%@ page import="net.rithms.riot.api.ApiConfig"%>
+<%@ page import="net.rithms.riot.api.RiotApi"%>
+<%@ page import="net.rithms.riot.api.RiotApiException"%>
+<%@ page import="net.rithms.riot.api.endpoints.summoner.dto.Summoner"%>
+<%@ page import="net.rithms.riot.constant.Platform"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.*"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.dto.Match"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.dto.MatchList"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.dto.MatchReference"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.dto.Participant"%>
+<%@ page import="net.rithms.riot.api.endpoints.match.dto.ParticipantStats"%>
+<%@ page import="net.rithms.riot.api.endpoints.league.*"%>
+<%@ page import="net.rithms.riot.api.endpoints.league.methods.*"%>
+<%@ page import="net.rithms.riot.api.endpoints.league.constant.*"%>
+<%@ page import="net.rithms.riot.api.endpoints.league.dto.*"%>
 
 <%
 	request.setCharacterEncoding("utf-8");
 %>
+
 <%
+
 	String name = request.getParameter("name");
 	Connection dbcon = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	SummonerDatas sd = new SummonerDatas();
+	ArrayList<SummonerDatas> sdList = new ArrayList<SummonerDatas>();
 	double avg = 0;
 	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?serverTimezone=UTC";
 	String DB_USER = "root";
@@ -27,9 +49,8 @@
 	//소환사정보 디비검색
 	try {
 		dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-		String sql = "select * from tsummoner where summonername=?";
+		String sql = "select * from tsummoner order by rankpoint";
 		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setString(1, name);
 		rs = pstmt.executeQuery();
 		while (rs.next()) {
 			sd.setAccountId(rs.getString("accountid")); //계정아이디
@@ -44,27 +65,12 @@
 			sd.setLeagueName(rs.getString("leaguename")); //리그명
 			sd.setLeaguePoints(rs.getInt("leaguepoints")); //리그포인트
 			sd.setTotalGame(rs.getInt("totalgames"));
+			sdList.add(sd);
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
 		System.out.println("소환사 정보 불러오기 오류");
 	}
-	
-	//챔피언정보
-	try {
-		String sql = "select * from tChampion_data where CHAMPION_ID =?";
-		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setInt(1, sd.getChampionId());
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			sd.setChampionName(rs.getString("CHAMPION_NAME"));
-			sd.setImage(rs.getString("image"));
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.println("챔피언아이디 불러오기 오류");
-	}
-	
 	pstmt.close();
 	rs.close();
 	dbcon.close();
@@ -79,7 +85,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>전적 검색 테이블</title>
+  <title>랭킹 테이블</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -96,39 +102,40 @@
 
 <!-- DataTables Example -->
         <div class="card mb-3">
-          <div class="card-header">
-            <%=sd.getName() %>님의 전적</div>
+          <div class="card-header">과기대 롤 랭킹</div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                 <thead>
                   <tr>
-                    <th>소환사명</th>
-                    <th>레벨</th>
+                    <th>소환사 명</th>
                     <th>티어</th>
-                    <th>리그포인트</th>
-                    <th>랭크 게임 승리</th>
-                    <th>랭크 게임 패배</th>
-                    <th>플레이한 게임 수</th>
+                    <th>LP</th>
+                    <th>레벨</th>
+                    <th>승리</th>
+                    <th>패배</th>
+                    <th>승률</th>
                   </tr>
                 </thead>
                 <tbody>
+                <%for(SummonerDatas i : sdList){ %>
                   <tr>
-					<td><%=sd.getName() %></td>
-					<td><%=sd.getSummonerLevel() %></td>
-					<td><%=sd.getTier()+" "+sd.getRank() %></td>
-					<td><%=sd.getLeaguePoints()+"LP" %></td>
-					<td><%=sd.getWin()+"승" %></td>
-					<td><%=sd.getLosses()+"패" %></td>
-					<td><%="총 "+sd.getTotalGame()+"회" %></td>
+                    <td style="vertical-align:middle"><%=i.getName()%></td>
+                  	<td style="vertical-align:middle"><%=i.getTier() + sd.getRank()%>
+                  	<td style="vertical-align:middle"><%=i.getLeaguePoints() %>
+                  	<td style="vertical-align:middle"><%=i.getSummonerLevel() %>
+                  	<td style="vertical-align:middle"><%=i.getWin() %>
+					<td style="vertical-align:middle"><%=i.getLosses()%></td>
+					<td style="vertical-align:middle"><%=i.getWin() / sd.getLosses() %>
                   </tr>
+                  <%} %>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-
+      
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

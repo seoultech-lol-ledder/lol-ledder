@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 	<%
 		String userID = null;
 		if (session.getAttribute("userID") != null) {
@@ -75,7 +76,8 @@
 		</div>
 	</nav>
 
-
+	<jsp:include page="SearchRankingList.jsp" flush="false"/>
+	
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.slim.min.js"></script>
 	<script src="vendor/jquery/jquery.min.js"></script>

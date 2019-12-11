@@ -1,73 +1,24 @@
-<%@ page import="Resources.SummonerDatas"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
+
 <%@ page import="user.UserDAO"%>
 
-
+<%@ page import="Resources.SummonerDatas"%>
+<%@ page import="Resources.SummonerDAO"%>
 
 <%
 	request.setCharacterEncoding("utf-8");
 %>
 <%
 	String name = request.getParameter("name");
-	Connection dbcon = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
 	SummonerDatas sd = new SummonerDatas();
 	double avg = 0;
-	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
-	String DB_USER = "root";
-	String DB_PASSWORD = "root";
-	try {
-		Class.forName("com.mysql.jdbc.Driver");
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	}
+	
+	SummonerDAO summonerDAO = new SummonerDAO();
 	//소환사정보 디비검색
-	try {
-		dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-		String sql = "select * from tsummoner where summonername=?";
-		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setString(1, name);
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			sd.setAccountId(rs.getString("accountid")); //계정아이디
-			sd.setId(rs.getString("summonerid")); //소환사아이디
-			sd.setName(rs.getString("summonername")); //소환사명
-			sd.setSummonerLevel(rs.getLong("summonerlevel")); //소환사레벨
-			sd.setProfileIconId(rs.getInt("profileiconid")); //프로필
-			sd.setRank(rs.getString("rank_pos")); //소환사 랭크
-			sd.setTier(rs.getString("tier")); //소환사 티어
-			sd.setWin(rs.getInt("wins")); //소환사 승리
-			sd.setLosses(rs.getInt("losses")); //소환사 패배
-			sd.setLeagueName(rs.getString("leaguename")); //리그명
-			sd.setLeaguePoints(rs.getInt("leaguepoints")); //리그포인트
-			sd.setTotalGame(rs.getInt("totalgames"));
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.println("소환사 정보 불러오기 오류");
-	}
-	
-	//챔피언정보
-	try {
-		String sql = "select * from tChampion_data where CHAMPION_ID =?";
-		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setInt(1, sd.getChampionId());
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			sd.setChampionName(rs.getString("CHAMPION_NAME"));
-			sd.setImage(rs.getString("image"));
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.println("챔피언아이디 불러오기 오류");
-	}
-	
-	pstmt.close();
-	rs.close();
-	dbcon.close();
+	summonerDAO.setSummonerData(name, sd);
+
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -97,7 +48,8 @@
 <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
-            <%=sd.getName() %>님의 전적</div>
+            <%=sd.getName() %>님의 전적  </div>
+            
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -126,7 +78,6 @@
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
 
   <!-- Bootstrap core JavaScript-->

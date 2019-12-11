@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ page import="Resources.LOLApiKey"%>
+<%@ page import="Resources.SummonerDAO"%>
 	
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList"%>
@@ -69,7 +70,7 @@
 		case "CHALLENGER":
 			rankPoint += 8000;
 			break;
-		case "GRAND_MASTER":
+		case "GRANDMASTER":
 			rankPoint += 7000;
 			break;
 		case "MASTER":
@@ -78,12 +79,13 @@
 		case "DIAMOND":
 			rankPoint += 5000;
 			break;
-		case "PLATUNUM":
+		case "PLATINUM":
 			rankPoint += 4000;
 			break;
 		case "GOLD":
 			rankPoint += 3000;
-		case "SHILBER":
+			break;
+		case "SILBER":
 			rankPoint += 2000;
 			break;
 		case "BRONZE":
@@ -131,46 +133,9 @@
 </head>
 <body>
 	<%
-		Connection dbcon = null;
-		PreparedStatement pstmt = null;
-		boolean found;
-		int temp=0;
-		
-		String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
-		String DB_USER = "root";
-		String DB_PASSWORD = "root";
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		//소환사정보 디비삽입
-		try {
-			dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-			String sql = "insert into tSummoner(summonerid,accountid, summonername,summonerlevel,profileiconid, Tier, Rank_pos, Wins,Losses,LeaguePoints,LeagueName,totalgames, rankpoint) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			pstmt = dbcon.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, acountId);
-			pstmt.setString(3, name); //이름 보여주기
-			pstmt.setInt(4, summonerLevel); //레벨 보여주기
-			pstmt.setInt(5, profileIconId);
-			pstmt.setString(6, tier); //티어보여기
-			pstmt.setString(7, rank);
-			pstmt.setInt(8, win);
-			pstmt.setInt(9, losses);
-			pstmt.setInt(10, leaguePoints);
-			pstmt.setString(11, leagueName);
-			pstmt.setInt(12, totalGames);
-			pstmt.setInt(13, rankPoint);
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("소환사정보 에러");
-		}
-		pstmt.close();
-		dbcon.close();
+		SummonerDAO summonerDAO = new SummonerDAO();
+		summonerDAO.insertSummoner(id, acountId, name, summonerLevel, profileIconId, tier, rank,
+				win, losses, leaguePoints, leagueName, totalGames, rankPoint);
 	%>
 
 </body>

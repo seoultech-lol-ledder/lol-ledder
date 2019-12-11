@@ -28,7 +28,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 %>
-
+	
 <%
 
 	String name = request.getParameter("name");
@@ -38,6 +38,7 @@
 	SummonerDatas sd = new SummonerDatas();
 	ArrayList<SummonerDatas> sdList = new ArrayList<SummonerDatas>();
 	double avg = 0;
+	
 	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?serverTimezone=UTC";
 	String DB_USER = "root";
 	String DB_PASSWORD = "root";
@@ -49,10 +50,11 @@
 	//소환사정보 디비검색
 	try {
 		dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-		String sql = "select * from tsummoner order by rankpoint";
+		String sql = "select * from tsummoner order by rankpoint DESC";
 		pstmt = dbcon.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		while (rs.next()) {
+			sd = new SummonerDatas();
 			sd.setAccountId(rs.getString("accountid")); //계정아이디
 			sd.setId(rs.getString("summonerid")); //소환사아이디
 			sd.setName(rs.getString("summonername")); //소환사명
@@ -99,7 +101,7 @@
 </head>
 
 <body>
-
+	
 <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">과기대 롤 랭킹</div>
@@ -121,7 +123,7 @@
                 <%for(SummonerDatas i : sdList){ %>
                   <tr>
                     <td style="vertical-align:middle"><%=i.getName()%></td>
-                  	<td style="vertical-align:middle"><%=i.getTier() + sd.getRank()%>
+                  	<td style="vertical-align:middle"><%=i.getTier() +" "+ sd.getRank()%>
                   	<td style="vertical-align:middle"><%=i.getLeaguePoints() %>
                   	<td style="vertical-align:middle"><%=i.getSummonerLevel() %>
                   	<td style="vertical-align:middle"><%=i.getWin() %>

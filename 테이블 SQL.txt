@@ -22,6 +22,7 @@ create table tsummoner
 	leaguepoints int(5),
 	leaguename varchar(100),
 	totalgames int(5),
+	rankpoint int(5),
 	primary key(summonerid)
 );
 

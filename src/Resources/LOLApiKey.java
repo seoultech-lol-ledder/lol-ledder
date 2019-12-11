@@ -6,7 +6,7 @@ public class LOLApiKey{
 	//api key ¼³Á¤
 	private ApiConfig cfg;
 	public LOLApiKey(){
-		 cfg = new ApiConfig().setKey("RGAPI-fa1a25ea-fd30-4fa5-b779-5e846d56cfc5");
+		 cfg = new ApiConfig().setKey("RGAPI-5d8505a9-7f46-48f9-848d-0acf1198afe6");
 	}
 	public ApiConfig getConfig() {
 		return this.cfg;

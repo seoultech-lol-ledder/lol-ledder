@@ -2,6 +2,7 @@
 	
 <%@ page import="Resources.SummonerDatas"%>
 <%@ page import="Resources.LOLApiKey"%>
+<%@ page import="Resources.SummonerDAO"%>
 
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList"%>
@@ -86,45 +87,16 @@
 			
 	}
 	
-	//search 에서 온 부분
-	
-	Connection dbcon = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+	SummonerDAO summonerDAO = new SummonerDAO();
 	
 	double[] avg = new double[10];
 	
-	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
-	String DB_USER = "root";
-	String DB_PASSWORD = "root";
-	try {
-		Class.forName("com.mysql.jdbc.Driver");
-	} catch (ClassNotFoundException e) {
-		System.out.println("DB 연결 실패");
-		e.printStackTrace();
-	}
 	//챔피언정보
 	for(int i = 0 ; i < 10 ; i++){
-		try {
-			dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-			String sql = "select * from tChampion_data where CHAMPION_ID =?";
-			pstmt = dbcon.prepareStatement(sql);
-			pstmt.setInt(1, championId[i]);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				championName[i] = rs.getString("CHAMPION_NAME");
-				image[i] = rs.getString("image");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(championId[i]);
-			System.out.println("챔피언아이디 불러오기 오류");
-		}
+		championName[i] = summonerDAO.getChampionName(championId[i]);
+		image[i] = summonerDAO.getChampionImage(championId[i]);
 	}
 	
-	pstmt.close();
-	rs.close();
-	dbcon.close();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

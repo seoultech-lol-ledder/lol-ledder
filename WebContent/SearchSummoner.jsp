@@ -3,6 +3,7 @@
 <%@ page import="java.sql.*"%>
 
 <%@ page import="Resources.LOLApiKey"%>
+<%@ page import="Resources.SummonerDAO"%>
 
 <%@ page import="net.rithms.riot.*"%>
 <%@ page import="net.rithms.riot.api.ApiConfig"%>
@@ -28,30 +29,10 @@
 <%
 	String name = request.getParameter("name");
 	System.out.println(name);
-	Connection dbcon = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+
+	SummonerDAO summonerDAO = new SummonerDAO();
 	boolean found;
-	
-	String DB_URL = "jdbc:mysql://localhost:3306/lol_ledder_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
-	String DB_USER = "root";
-	String DB_PASSWORD = "root";
-
-	try {
-		Class.forName("com.mysql.jdbc.Driver");
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	}
-
-	try {
-		dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-		String sql = "select * from tsummoner where summonername=?";
-		pstmt = dbcon.prepareStatement(sql);
-		pstmt.setString(1, name);
-		rs = pstmt.executeQuery();
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
+	found = summonerDAO.foundSummoner(name);
 %>
 
 
@@ -131,8 +112,7 @@
 									placeholder="소환사 명을 입력하세요.">
 							</div>
 							<div class="col-12 col-md-3">
-								<button type="submit" class="btn btn-block btn-lg btn-primary">소환사
-									검색</button>
+								<button type="submit" class="btn btn-block btn-lg btn-primary">소환사 검색</button>
 							</div>
 						</div>
 					</form>
@@ -147,12 +127,11 @@
 			LOLApiKey key = new LOLApiKey();
 			//api key 설정
 			ApiConfig cfg = key.getConfig();
-			//ApiConfig cfg = new ApiConfig().setKey("RGAPI-fa1a25ea-fd30-4fa5-b779-5e846d56cfc5");
 			//api패스 설정
 			RiotApi api = new RiotApi(cfg);
 			//소환사 이름으로 소환사id값을 찾기위함
 			Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("name"));
-			if(rs.next()){
+			if(found){
 				System.out.println("found!");
 				%><jsp:include page="SearchDBData.jsp" flush="false"/> 
 				<jsp:include page="SearchMatchList.jsp" flush="flase"/><%
@@ -165,11 +144,6 @@
 	  }catch(Exception e){
 		  	out.println("<script>alert('소환사명 검색 실패');</script>");
 	  }
-	
-	
-		pstmt.close();
-		rs.close();
-		dbcon.close();
 	%>
 	
   <!-- Bootstrap core JavaScript -->

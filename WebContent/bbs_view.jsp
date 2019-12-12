@@ -49,8 +49,13 @@
 			script.println("location.href = 'bbs.jsp'");
 			script.println("</script>");
 		}
+		
+		String category = null;
+		if (request.getParameter("category") != null) {
+			category = (String) request.getParameter("category");
+		}
 
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		Bbs bbs = new BbsDAO().getBbs(bbsID, category);
 	%>
 	
 	<!-- Navigation -->
@@ -64,9 +69,9 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link"
-						href="index.html">전적 검색
-					</a></li>
+					<li class="nav-item">
+						<a class="nav-link" href="index.jsp">전적 검색</a>
+					</li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
 					<li class="nav-item active"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
@@ -118,13 +123,13 @@
 					</tr>
 				</tbody>
 			</table>
-			<a style="margin-right: 5px" href="bbs.jsp" class="btn btn-primary">목록</a>
+			<a style="margin-right: 5px" href="bbs.jsp?category=<%=category %>" class="btn btn-primary">목록</a>
 			<%
 				if (userID != null && userID.equals(bbs.getUserID())) {
 			%>
-			<a style="margin-right: 5px" href="bbs_update.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">수정</a>
+			<a style="margin-right: 5px" href="bbs_update.jsp?bbsID=<%=bbsID%>&category=<%=category %>" class="btn btn-primary">수정</a>
 			<a onClick="return confirm('정말로 삭제하시겠습니까?')"
-				href="bbs_deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">삭제</a>
+				href="bbs_deleteAction.jsp?bbsID=<%=bbsID%>&category=<%=category %>" class="btn btn-primary">삭제</a>
 			<%
 				}
 			%>

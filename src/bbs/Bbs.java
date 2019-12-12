@@ -8,7 +8,14 @@ public class Bbs {
 	private String bbsDate;
 	private String bbsContent;
 	private int bbsAvailable;
+	private String bbsCategory;
 	
+	public String getBbsCategory() {
+		return bbsCategory;
+	}
+	public void setBbsCategory(String bbsCategory) {
+		this.bbsCategory = bbsCategory;
+	}
 	public int getBbsID() {
 		return bbsID;
 	}

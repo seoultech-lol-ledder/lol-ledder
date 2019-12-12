@@ -5,7 +5,21 @@ public class User {
 	private String userID;
 	private String userPassword;
 	private String userGameID;
+	private String userEmail;
+	private boolean userEmailChecked;
 	
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	public boolean isUserEmailChecked() {
+		return userEmailChecked;
+	}
+	public void setUserEmailChecked(boolean userEmailChecked) {
+		this.userEmailChecked = userEmailChecked;
+	}
 	public String getUserID() {
 		return userID;
 	}

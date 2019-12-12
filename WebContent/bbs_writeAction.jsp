@@ -26,6 +26,11 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
+		
+		String category = null;
+		if (request.getParameter("category") != null) {
+			category = (String) request.getParameter("category");
+		}
 
 		if (bbs.getBbsTitle() == null || bbs.getBbsContent() == null) {
 			PrintWriter script = response.getWriter();
@@ -35,7 +40,7 @@
 			script.println("</script>");
 		} else {
 			BbsDAO bbsDAO = new BbsDAO(); //인스턴스 생성
-			int result = bbsDAO.write(bbs.getBbsTitle(), userID, bbs.getBbsContent());
+			int result = bbsDAO.write(bbs.getBbsTitle(), userID, bbs.getBbsContent(), category);
 			// 글쓰기 실패
 			if (result == -1) {
 				PrintWriter script = response.getWriter();
@@ -48,7 +53,7 @@
 			else {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("location.href = 'bbs.jsp'");
+				script.println("location.href = 'bbs.jsp?category=" + category + "'");
 				script.println("</script>");
 			}
 		}

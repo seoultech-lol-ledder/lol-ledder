@@ -39,8 +39,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link"
-						href="index.jsp">전적 검색 </a></li>
+					<li class="nav-item"><a class="nav-link" href="index.jsp">전적
+							검색 </a></li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
 					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
@@ -56,14 +56,14 @@
 	</nav>
 
 	<!-- 로긴폼 -->
-	<div class="container">
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4">
+	<div class="container" style="text-align: center; margin-top: 50px;">
+		<div class="col-lg-4" style="display: inline-block;">
 			<!-- 점보트론 -->
 			<div class="jumbotron" style="padding-top: 20px;">
 				<!-- 로그인 정보를 숨기면서 전송post -->
 				<form method="post" action="bbs_joinAction.jsp">
 					<h3 style="text-align: center;">회원가입 화면</h3>
+					
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="아이디"
 							name="userID" maxlength="20">
@@ -73,14 +73,21 @@
 						<input type="password" class="form-control" placeholder="비밀번호"
 							name="userPassword" maxlength="20">
 					</div>
+					
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="게임아이디"
 							name="userGameID" maxlength="20">
 					</div>
+					
+					<div style="margin-bottom: 60px;">
+						<input style="float: left; width: 40%; height:35px;" type="text"
+							class="form-control" placeholder="이메일" name="userEmail"
+							maxlength="20">
+						<div style="float: left; margin-left: 5px; margin-top: 5px;">@seoultech.ac.kr</div>
+					</div>
+					
 					<input type="submit" class="btn btn-primary form-control"
 						value="회원가입">
-
-
 				</form>
 			</div>
 		</div>
@@ -91,6 +98,5 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- 부트스트랩 JS  -->
 	<script src="js/bootstrap.js"></script>
-
 </body>
 </html>

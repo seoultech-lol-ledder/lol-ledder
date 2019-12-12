@@ -26,3 +26,21 @@ create table tsummoner
 	primary key(summonerid)
 );
 
+CREATE TABLE `bbs` (
+  `bbsID` int(11) NOT NULL DEFAULT '0',
+  `bbsTitle` varchar(50) DEFAULT NULL,
+  `userID` varchar(20) DEFAULT NULL,
+  `bbsDate` datetime DEFAULT NULL,
+  `bbsContent` varchar(2048) DEFAULT NULL,
+  `bbsAvailable` int(11) DEFAULT NULL,
+  `bbsCategory` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`bbsID`)
+)
+
+CREATE TABLE `user` (
+  `userID` varchar(20) DEFAULT NULL,
+  `userPassword` varchar(20) DEFAULT NULL,
+  `userGameID` varchar(20) DEFAULT NULL,
+  `userEmail` varchar(50) DEFAULT NULL,
+  `userEmailChecked` int(1) DEFAULT NULL
+)

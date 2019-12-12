@@ -42,6 +42,10 @@
 			script.println("location.href = 'bbs_login.jsp'");
 			script.println("</script>");
 		}
+		String category = null;
+		if (request.getParameter("category") != null) {
+			category = (String) request.getParameter("category");
+		}
 	%>
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -68,7 +72,7 @@
 		</div>
 	</nav>
 	<div class="container">
-		<form method="post" action="bbs_writeAction.jsp">
+		<form method="post" action="bbs_writeAction.jsp?category=<%=category%>">
 			<div style="text-align: center;">
 				<div
 					style="text-align: left; padding-left: 10px; margin-bottom: 20px; font-weight: bold; font-size: large;">게시판

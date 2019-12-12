@@ -37,9 +37,20 @@
 	
 		UserDAO userDAO = new UserDAO(); //인스턴스생성
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
-
+		int emailChecked = userDAO.getUserEmailChecked(user.getUserID());
+		
 		//로그인 성공
 		if (result == 1) {
+			if(emailChecked != 1) {
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('이메일 인증을 완료해 주십시오.')");
+				script.println("history.back()");
+				script.println("</script>");
+				script.close();
+				return;
+			}
+			
 			session.setAttribute("userID", user.getUserID());
 			PrintWriter script = response.getWriter();
 			script.println("<script>");

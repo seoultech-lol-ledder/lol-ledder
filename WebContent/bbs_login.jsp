@@ -39,9 +39,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link"
-						href="index.jsp">전적 검색
-					</a></li>
+					<li class="nav-item"><a class="nav-link" href="index.jsp">전적
+							검색 </a></li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
 					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
@@ -55,11 +54,10 @@
 
 		</div>
 	</nav>
-	
+
 	<!-- 로긴폼 -->
-	<div class="container">
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4">
+	<div class="container" style="text-align: center; margin-top: 50px;">
+		<div class="col-lg-4" style="display: inline-block;">
 			<!-- 점보트론 -->
 			<div class="jumbotron" style="padding-top: 20px;">
 				<!-- 로그인 정보를 숨기면서 전송post -->

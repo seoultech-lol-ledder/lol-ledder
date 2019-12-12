@@ -14,6 +14,10 @@
 	if (request.getParameter("pageNumber") != null) {
 		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 	}
+	String category = "free";
+	if (request.getParameter("category") != null) {
+		category = (String) request.getParameter("category");
+	}
 %>
 
 <!DOCTYPE html>
@@ -69,8 +73,8 @@ a:hover {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link"
-						href="index.jsp">전적 검색</a></li>
+					<li class="nav-item"><a class="nav-link" href="index.jsp">전적
+							검색</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
 					<li class="nav-item active"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
@@ -94,60 +98,114 @@ a:hover {
 		</div>
 	</nav>
 
-	<div class="container">
-		<div class="row">
-			<table class="table table-hover" style="text-align: center">
-				<thead>
-					<tr>
-						<th style="text-align: center">번호</th>
-						<th style="text-align: center">제목</th>
-						<th style="text-align: center">작성자</th>
-						<th style="text-align: center">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						BbsDAO bbsDAO = new BbsDAO();
-						ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
-						for (int i = 0; i < list.size(); i++) {
-					%>
-					<tr>
-						<td><%=list.get(i).getBbsID()%></td>
-						<td><a href="bbs_view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
-						.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
-						<td><%=list.get(i).getUserID()%></td>
-						<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 "
-						+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
-					</tr>
-					<%
-						}
-					%>
-				</tbody>
-			</table>
+	<div>
+		<div
+			style="float: left; vertical-align: top; margin: 50px 15px 0px 15px;">
+			<ul class="navbar-nav">
 			<%
-				if (pageNumber != 1) {
+				if(category.equals("free")){
 			%>
-			<a style="margin-right: 5px"
-				href="bbs.jsp?pageNumber=<%=pageNumber - 1%>"
-				class="btn btn-outline-primary">이전</a>
+				<li><a href="bbs.jsp?category=free" class="btn btn-primary">자유</a></li>
+			<%
+				}else {
+			%>
+				<li><a href="bbs.jsp?category=free" class="btn btn-outline-primary">자유</a></li>
 			<%
 				}
 			%>
 			<%
-				if (bbsDAO.nextPage(pageNumber + 1)) {
+				if(category.equals("humor")){
 			%>
-			<a style="margin-right: 5px"
-				href="bbs.jsp?pageNumber=<%=pageNumber + 1%>"
-				class="btn btn-outline-primary">다음</a>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=humor" class="btn btn-primary">유머</a></li>
+			<%
+				}else {
+			%>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=humor" class="btn btn-outline-primary">유머</a></li>
 			<%
 				}
 			%>
-			<a href="bbs_write.jsp" class="btn btn-primary">글쓰기</a>
+			<%
+				if(category.equals("knowhow")){
+			%>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=knowhow" class="btn btn-primary">노하우</a></li>
+			<%
+				}else {
+			%>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=knowhow" class="btn btn-outline-primary">노하우</a></li>
+			<%
+				}
+			%>
+			<%
+				if(category.equals("civilwar")){
+			%>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=civilwar" class="btn btn-primary">내전</a></li>
+			<%
+				}else {
+			%>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=civilwar" class="btn btn-outline-primary">내전</a></li>
+			<%
+				}
+			%>
+			</ul>
 		</div>
+		<div class="container" style="float: left;">
+			<div class="row">
+				<table class="table table-hover" style="text-align: center">
+					<thead>
+						<tr>
+							<th style="text-align: center">번호</th>
+							<th style="text-align: center">제목</th>
+							<th style="text-align: center">작성자</th>
+							<th style="text-align: center">작성일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							BbsDAO bbsDAO = new BbsDAO();
+							ArrayList<Bbs> list = bbsDAO.getList(pageNumber, category);
+							for (int i = 0; i < list.size(); i++) {
+						%>
+						<tr>
+							<td><%=list.get(i).getBbsID()%></td>
+							<td><a href="bbs_view.jsp?category=<%=category %>&bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+							<td><%=list.get(i).getUserID()%></td>
+							<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 "
+						+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
+						</tr>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
+				<%
+					if (pageNumber != 1) {
+				%>
+				<a style="margin-right: 5px"
+					href="bbs.jsp?category=<%=category %>&pageNumber=<%=pageNumber - 1%>"
+					class="btn btn-outline-primary">이전</a>
+				<%
+					}
+				%>
+				<%
+//					if (bbsDAO.nextPage(pageNumber + 1, category)) {
+					if (bbsDAO.nextPage(pageNumber, category)) {
 
-		<!-- Bootstrap core JavaScript -->
-		<script src="vendor/jquery/jquery.slim.min.js"></script>
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+				%>
+				<a style="margin-right: 5px"
+					href="bbs.jsp?category=<%=category %>&pageNumber=<%=pageNumber + 1%>"
+					class="btn btn-outline-primary">다음</a>
+				<%
+					}
+				%>
+				<a href="bbs_write.jsp?category=<%=category %>" class="btn btn-primary">글쓰기</a>
+			</div>
+		</div>.
+	</div>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.slim.min.js"></script>
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

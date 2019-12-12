@@ -44,6 +44,10 @@
 			script.println("location.href = 'bbs_login.jsp'");
 			script.println("</script>");
 		}
+		String category = null;
+		if (request.getParameter("category") != null) {
+			category = (String) request.getParameter("category");
+		}
 
 		int bbsID = 0;
 		if (request.getParameter("bbsID") != null) {
@@ -57,7 +61,7 @@
 			script.println("</script>");
 		}
 
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		Bbs bbs = new BbsDAO().getBbs(bbsID, category);
 		if (!userID.equals(bbs.getUserID())) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
@@ -92,7 +96,7 @@
 		</div>
 	</nav>
 	<div class="container">
-		<form method="post" action="bbs_updateAction.jsp?bbsID=<%=bbsID%>">
+		<form method="post" action="bbs_updateAction.jsp?bbsID=<%=bbsID%>&category=<%=category%>">
 			<div style="text-align: center;">
 				<div
 					style="text-align: left; padding-left: 10px; margin-bottom: 20px; font-weight: bold; font-size: large;">게시판

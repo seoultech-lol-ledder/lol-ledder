@@ -29,6 +29,10 @@
 			script.println("location.href = 'bbs_login.jsp'");
 			script.println("</script>");
 		}
+		String category = null;
+		if (request.getParameter("category") != null) {
+			category = (String) request.getParameter("category");
+		}
 
 		int bbsID = 0;
 		if (request.getParameter("bbsID") != null) {
@@ -42,7 +46,7 @@
 			script.println("</script>");
 		}
 
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		Bbs bbs = new BbsDAO().getBbs(bbsID, category);
 		if (!userID.equals(bbs.getUserID())) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
@@ -64,7 +68,7 @@
 			else {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("location.href = 'bbs.jsp'");
+				script.println("location.href = 'bbs.jsp?category=" + category + "'");
 				script.println("</script>");
 			}
 		}

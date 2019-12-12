@@ -128,4 +128,24 @@ public class SummonerDAO {
 			System.out.println("소환사 정보 불러오기 오류");
 		}
 	}
+	
+	public String getSummonerName(String userId) {
+		try {
+			String sql = "select userGameID from USER where userID =?";
+			PreparedStatement pstmt = dbcon.prepareStatement(sql);
+			pstmt = dbcon.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				return rs.getString("userGameID");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(userId);
+			System.out.println("게임 닉네임 불러오기 에러");
+		}
+		return "e";
+	}
+	
+	
 }

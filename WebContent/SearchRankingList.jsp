@@ -30,7 +30,8 @@
 %>
 	
 <%
-
+	
+	
 	String name = request.getParameter("name");
 	Connection dbcon = null;
 	PreparedStatement pstmt = null;
@@ -128,7 +129,7 @@
                   	<td style="vertical-align:middle"><%=i.getSummonerLevel() %>
                   	<td style="vertical-align:middle"><%=i.getWin() %>
 					<td style="vertical-align:middle"><%=i.getLosses()%></td>
-					<td style="vertical-align:middle"><%=i.getWin() / sd.getLosses() %>
+					<td style="vertical-align:middle"><%=(int)(((float)i.getWin() / (i.getWin() + i.getLosses()) )*100) %>%
                   </tr>
                   <%} %>
                 </tbody>

@@ -51,7 +51,7 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="index.jsp">전적 검색</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
+					<li class="nav-item"><a class="nav-link" href="myrecord.jsp">내 전적</a></li>
 					<li class="nav-item"><a class="nav-link" href="ranking.jsp">랭킹</a></li>
 					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
 					</li>
@@ -92,8 +92,7 @@
 									placeholder="소환사 명을 입력하세요.">
 							</div>
 							<div class="col-12 col-md-3">
-								<button type="submit" class="btn btn-block btn-lg btn-primary">소환사
-									검색</button>
+								<button type="submit" class="btn btn-block btn-lg btn-primary">소환사 검색</button>
 							</div>
 						</div>
 					</form>

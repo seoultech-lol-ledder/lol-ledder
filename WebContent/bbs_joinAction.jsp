@@ -63,6 +63,8 @@
 			else {
 				session.setAttribute("userID", user.getUserID());
 				session.setAttribute("userEmail", user.getUserEmail());
+				session.setAttribute("userGameID", user.getUserGameID());
+				
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 //				script.println("location.href = 'index.jsp'");

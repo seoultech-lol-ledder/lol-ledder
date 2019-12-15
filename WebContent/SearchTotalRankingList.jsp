@@ -51,7 +51,7 @@
 	//소환사정보 디비검색
 	try {
 		dbcon = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-		String sql = "select * from tsummoner where is_user=true order by rankpoint DESC";
+		String sql = "select * from tsummoner order by rankpoint DESC";
 		pstmt = dbcon.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		while (rs.next()) {
@@ -105,7 +105,7 @@
 	
 <!-- DataTables Example -->
         <div class="card mb-3">
-          <div class="card-header">과기대 롤 랭킹</div>
+          <div class="card-header">이용자 롤 랭킹</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >

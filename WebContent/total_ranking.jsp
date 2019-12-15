@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 	<%
 		String userID = null;
 		if (session.getAttribute("userID") != null) {
@@ -16,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-	<title>LOL Ledder</title>
+	<title>과기대 랭킹</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -48,11 +49,11 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active">
+					<li class="nav-item">
 						<a class="nav-link" href="index.jsp">전적 검색</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="myrecord.jsp">내 전적</a></li>
-					<li class="nav-item"><a class="nav-link" href="ranking.jsp">랭킹</a></li>
+					<li class="nav-item active"><a class="nav-link" href="ranking.jsp">랭킹</a></li>
 					<li class="nav-item"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
 					</li>
 				</ul>
@@ -74,33 +75,20 @@
 
 		</div>
 	</nav>
-
-	<!-- Masthead -->
-	<header class="masthead text-white text-center">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-xl-9 mx-auto">
-					<h1 class="mb-5">전적 검색</h1>
-				</div>
-				<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-					<form method="post" action="SearchSummoner.jsp">
-						<div class="form-row">
-							<div class="col-12 col-md-9 mb-2 mb-md-0">
-								<input type="text" name="userGameID"
-									class="form-control form-control-lg"
-									placeholder="소환사 명을 입력하세요.">
-							</div>
-							<div class="col-12 col-md-3">
-								<button type="submit" class="btn btn-block btn-lg btn-primary">소환사 검색</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</header>
-
+      <div class="container-fluid">
+      <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="ranking.jsp">과기대 랭킹 보기</a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href="total_ranking.jsp">전체 랭킹 보기</a>
+            </li>
+        </ol>
+      </div>
+	<jsp:include page="SearchTotalRankingList.jsp" flush="false"/>
+	<a class="btn btn-primary" style="float:right;" 
+	href="refresh.jsp">갱 신</a>
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.slim.min.js"></script>
 	<script src="vendor/jquery/jquery.min.js"></script>

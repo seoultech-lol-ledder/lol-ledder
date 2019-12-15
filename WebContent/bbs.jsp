@@ -65,7 +65,7 @@ a:hover {
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
 		<div class="container">
-			<a class="navbar-brand" href="#">LOL Ledder</a>
+			<a class="navbar-brand" href="index.jsp">LOL Ledder</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -73,10 +73,11 @@ a:hover {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="index.jsp">전적
-							검색</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">내 전적</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
+					<li class="nav-item">
+						<a class="nav-link" href="index.jsp">전적 검색</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="myrecord.jsp">내 전적</a></li>
+					<li class="nav-item"><a class="nav-link" href="ranking.jsp">랭킹</a></li>
 					<li class="nav-item active"><a class="nav-link" href="bbs.jsp">커뮤니티</a>
 					</li>
 				</ul>
@@ -90,7 +91,8 @@ a:hover {
 			<%
 				} else {
 			%>
-			<a class="btn btn-primary" href="bbs_logoutAction.jsp">로그아웃</a>
+			<a class="btn btn-primary"
+				href="bbs_logoutAction.jsp">로그아웃</a>
 			<%
 				}
 			%>
@@ -98,57 +100,57 @@ a:hover {
 		</div>
 	</nav>
 
+
 	<div>
-		<div
-			style="float: left; vertical-align: top; margin: 50px 15px 0px 15px;">
+		<div style="position: fixed; margin: 40px 0px 0px 20px;">
 			<ul class="navbar-nav">
 			<%
 				if(category.equals("free")){
 			%>
-				<li><a href="bbs.jsp?category=free" class="btn btn-primary">자유</a></li>
+				<li><a href="bbs.jsp?category=free" class="btn btn-primary" style="width:200px;">자유</a></li>
 			<%
 				}else {
 			%>
-				<li><a href="bbs.jsp?category=free" class="btn btn-outline-primary">자유</a></li>
+				<li><a href="bbs.jsp?category=free" class="btn btn-outline-primary" style="width:200px;">자유</a></li>
 			<%
 				}
 			%>
 			<%
 				if(category.equals("humor")){
 			%>
-				<li style="margin-top: 5px;"><a href="bbs.jsp?category=humor" class="btn btn-primary">유머</a></li>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=humor" class="btn btn-primary"style="width:200px;">유머</a></li>
 			<%
 				}else {
 			%>
-				<li style="margin-top: 5px;"><a href="bbs.jsp?category=humor" class="btn btn-outline-primary">유머</a></li>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=humor" class="btn btn-outline-primary" style="width:200px;">유머</a></li>
 			<%
 				}
 			%>
 			<%
 				if(category.equals("knowhow")){
 			%>
-				<li style="margin-top: 5px;"><a href="bbs.jsp?category=knowhow" class="btn btn-primary">노하우</a></li>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=knowhow" class="btn btn-primary" style="width:200px;">노하우</a></li>
 			<%
 				}else {
 			%>
-				<li style="margin-top: 5px;"><a href="bbs.jsp?category=knowhow" class="btn btn-outline-primary">노하우</a></li>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=knowhow" class="btn btn-outline-primary" style="width:200px;">노하우</a></li>
 			<%
 				}
 			%>
 			<%
 				if(category.equals("civilwar")){
 			%>
-				<li style="margin-top: 5px;"><a href="bbs.jsp?category=civilwar" class="btn btn-primary">내전</a></li>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=civilwar" class="btn btn-primary" style="width:200px;">내전</a></li>
 			<%
 				}else {
 			%>
-				<li style="margin-top: 5px;"><a href="bbs.jsp?category=civilwar" class="btn btn-outline-primary">내전</a></li>
+				<li style="margin-top: 5px;"><a href="bbs.jsp?category=civilwar" class="btn btn-outline-primary" style="width:200px;">내전</a></li>
 			<%
 				}
 			%>
 			</ul>
 		</div>
-		<div class="container" style="float: left;">
+		<div class="container" style="text-align: middle;,margin: auto;">
 			<div class="row">
 				<table class="table table-hover" style="text-align: center">
 					<thead>

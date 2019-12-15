@@ -30,6 +30,11 @@
 		userEmail = (String) session.getAttribute("userEmail");
 	}
 
+	String userGameID = null;
+	if (session.getAttribute("userGameID") != null) {
+		userGameID = (String) session.getAttribute("userGameID");
+	}
+	
 	if (userID == null) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -43,7 +48,7 @@
 	String to = userEmail;
 	String subject = "LOL Ledder 이메일 인증 메일입니다.";
 	String content = "다음 링크에 접속하여 이메일 인증을 진행하세요." + "<a href='" + host + "emailCheckAction.jsp?userID=" + userID + "&code="
-			+ new SHA256().getSHA256(to) + "'>이메일 인증하기</a>";
+			+ new SHA256().getSHA256(to) + "&userGameID=" + userGameID +"'>이메일 인증하기</a>";
 
 	Properties p = new Properties();
 	p.put("mail.smtp.user", from);

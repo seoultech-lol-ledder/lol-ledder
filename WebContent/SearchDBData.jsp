@@ -11,7 +11,7 @@
 	request.setCharacterEncoding("utf-8");
 %>
 <%
-	String name = request.getParameter("name");
+	String name = request.getParameter("userGameID");
 	SummonerDatas sd = new SummonerDatas();
 	double avg = 0;
 	

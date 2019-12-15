@@ -38,7 +38,7 @@
 		//api패스 설정
 		RiotApi api = new RiotApi(cfg);
 		//소환사 이름으로 소환사id값을 찾기위함
-		Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("name"));
+		Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("userGameID"));
 		//소환사 정보
 		String name = summoner.getName(); //소환사이름
 		String acountId = summoner.getAccountId(); //계정 아이디
@@ -63,7 +63,7 @@
 		String tier = tempList.get(0).getTier();//현재티어
 		int win = tempList.get(0).getWins();//승리횟수
 		int losses = tempList.get(0).getLosses();//패배횟수
-		int totalGames = matchList.getTotalGames();//총 플레이 횟수
+		int totalGames = win + losses;//총 플레이 횟수
 
 		int rankPoint = 0;
 		switch(tier) {

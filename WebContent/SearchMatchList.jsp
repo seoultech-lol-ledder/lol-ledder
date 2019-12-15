@@ -39,7 +39,7 @@
 	//api패스 설정
 	RiotApi api = new RiotApi(cfg);
 	//소환사 이름으로 소환사id값을 찾기위함
-	Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("name"));
+	Summoner summoner = api.getSummonerByName(Platform.KR, request.getParameter("userGameID"));
 	//소환사 정보
 	String name = summoner.getName(); //소환사이름
 	String acountId = summoner.getAccountId(); //계정 아이디
